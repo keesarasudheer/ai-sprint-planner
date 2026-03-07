@@ -14,6 +14,21 @@ build/
 # Node
 node_modules/
 
+# Next.js
+.next/
+out/
+
+# Bun
+*.tsbuildinfo
+
+# SQLite databases
+*.db
+*.db-journal
+
+# Logs (generated at runtime)
+project-context/2.build/logs/*.log
+project-context/2.build/logs/prompt-trace-*.md
+
 # IDE
 .vscode/
 *.swp

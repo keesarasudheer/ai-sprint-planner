@@ -14,7 +14,7 @@ actions:
   - document-frontend  # Document all FE work in frontend.md
 inputs:
   - project-context/product-requirements-document.md
-  - project-context/system-architecture-doc.md
+  - project-context/system-architecture-doc.md (sad-mvp.md and not sad.md)
   - project-context/2.build/setup.md
 outputs:
   - project-context/2.build/frontend.md
