@@ -14,6 +14,7 @@ It systematizes research-driven planning, modular AI agent workflows, and rapid 
 - [How to Use the Framework](#how-to-use-the-framework)
 - [Phase 1: Define Workflow (Product Manager)](#phase-1-define-workflow-product-manager)
 - [Phase 2: Build Workflow (Multi-Agent)](#phase-2-build-workflow-multi-agent)
+- [Running the Application](#running-the-application)
 - [Core Concepts](#core-concepts)
 - [Contributing](#contributing)
 - [License](#license)
@@ -255,6 +256,88 @@ Phase 2 is executed by running each epic in sequence after completing Phase 1:
 - **Quality Assurance:** Test end-to-end, log results and limitations (`qa.md`)
 
 Artifacts are versioned and stored in `project-context/2.build` for traceability.
+
+---
+
+## Running the Application
+
+### Prerequisites
+
+| Tool | Version | Install |
+| :--- | :------ | :------ |
+| **Bun** | 1.3.10+ | Windows: `powershell -c "irm bun.sh/install.ps1 \| iex"` / macOS/Linux: `curl -fsSL https://bun.sh/install \| bash` |
+| **Python** | 3.12+ | [python.org](https://www.python.org/downloads/) |
+| **Git** | latest | [git-scm.com](https://git-scm.com/) |
+
+### Environment Setup
+
+Copy the example environment file and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+At minimum, set your `OPENAI_API_KEY` in `.env`. The other defaults work for local development.
+
+### Frontend (Next.js)
+
+The frontend is a Next.js 16 app located in `frontend/`.
+
+```bash
+cd frontend
+bun install
+bun run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+**Available scripts:**
+
+| Script | Command | Description |
+| :----- | :------ | :---------- |
+| `bun run dev` | `next dev` | Start development server with hot reload |
+| `bun run build` | `next build` | Create optimized production build |
+| `bun run start` | `next start` | Serve the production build |
+| `bun run lint` | `eslint` | Run linter checks |
+
+### Backend (FastAPI + CrewAI)
+
+The backend is a Python FastAPI service located in `backend/`.
+
+```bash
+cd backend
+python -m venv .venv
+
+# Activate the virtual environment
+# Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+# macOS / Linux:
+source .venv/bin/activate
+
+pip install -r requirements.txt
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+The API will be available at [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+### Running Both Together
+
+For a full local setup, run the frontend and backend in separate terminals:
+
+**Terminal 1 — Backend:**
+```bash
+cd backend
+.venv\Scripts\Activate.ps1   # or source .venv/bin/activate
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+**Terminal 2 — Frontend:**
+```bash
+cd frontend
+bun run dev
+```
+
+The frontend connects to the backend via `NEXT_PUBLIC_API_URL` (defaults to `http://127.0.0.1:8000`).
 
 ---
 
